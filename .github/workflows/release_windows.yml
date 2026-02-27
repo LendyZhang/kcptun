@@ -42,11 +42,11 @@ jobs:
           CGO_ENABLED: 0
         shell: cmd
         run: |
-          mkdir dist
+          if not exist dist mkdir dist
           go build -mod=vendor -ldflags "-X main.VERSION=${{ steps.version.outputs.version }} -s -w" ^
-            -o dist\client_${{ matrix.goos }}_${{ matrix.goarch }} github.com/xtaci/kcptun/client
+            -o dist\client_${{ matrix.goos }}_${{ matrix.goarch }}.exe github.com/xtaci/kcptun/client
           go build -mod=vendor -ldflags "-X main.VERSION=${{ steps.version.outputs.version }} -s -w" ^
-            -o dist\server_${{ matrix.goos }}_${{ matrix.goarch }} github.com/xtaci/kcptun/server
+            -o dist\server_${{ matrix.goos }}_${{ matrix.goarch }}.exe github.com/xtaci/kcptun/server
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
